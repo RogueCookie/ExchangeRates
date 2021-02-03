@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "BTBConnector": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

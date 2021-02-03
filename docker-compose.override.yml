@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  oz_client_api:
+    environment:  
+      - ConnectionStrings__ApiClient
+
+  oz_scheduler:
+    environment:
+      - ConnectionStrings__Updater
+
+  oz_loader:
+    environment:
+      - ConnectionStrings__Updater
+
+  oz_btb_connector:
+    environment:
+      - ConnectionStrings__Updater
+
+  rabbitmq:
+    environment:
+      - ConnectionStrings__Updater
+
+  postgres:
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - POSTGRES_PORT
+
+  pgadmin4:
+    environment:
+      - PGADMIN_DEFAULT_EMAIL
+      - PGADMIN_DEFAULT_PASSWORD
+    
+    

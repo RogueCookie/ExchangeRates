@@ -1,8 +1,8 @@
 # Tracking the exchange rate of the Czech crown
 # Архитектура решения
 Схема  
-![Architecture](./Architecture.jpg)  
-исходник в drawio [Architecture](./Architecture.drawio) 
+![Architecture](./UpdatedArchitecture.png)  
+исходник в drawio [Architecture](./UpdatedArchitecture.drawio) 
 Чешский национальный банк предоставляет возможность отслеживать валютный курс чешской кроны.
 Ежедневный курс доступен по адресу https://www.cnb.cz/en/financial_markets/foreign_excha..
 Исторические данные доступны по адресу https://www.cnb.cz/en/financial_markets/foreign_excha..

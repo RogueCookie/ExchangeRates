@@ -1,0 +1,65 @@
+version: '3.4'
+
+networks:
+  oz: {}
+
+services:  
+  oz_client_api:
+    image: ${DOCKER_REGISTRY}/oz_client_api:${TAG}
+    build:
+      context: .
+      dockerfile: Services/ReportApi/Dockerfile
+    networks:
+      - oz
+    ports:
+      - "82:80"
+
+  oz_scheduler:
+    image: ${DOCKER_REGISTRY}/oz_scheduler:${TAG}
+    build:
+      context: .
+      dockerfile: Services/Scheduler/Dockerfile
+    networks:
+      - oz
+    ports:
+      - "83:80"
+
+  oz_loader:
+    image: ${DOCKER_REGISTRY}/oz_loader:${TAG}
+    build:
+      context: .
+      dockerfile: Services/Loader/Dockerfile
+    networks:
+      - oz
+    restart: on-failure
+
+  oz_btb_connector:
+    image: ${DOCKER_REGISTRY}/oz_btb_connector:${TAG}
+    build:
+      context: .
+      dockerfile: Services/BTBConnector/Dockerfile
+    networks:
+      - oz
+    restart: on-failure
+
+  rabbitmq:
+    image: rabbitmq:3.8.11-management
+    networks:
+     - oz
+    restart: on-failure
+
+  postgres:
+    container_name: postgres_container
+    image: postgres:13.1 
+    networks:
+     - oz
+    restart: on-failure
+
+  pgadmin4:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:latest
+    networks:
+     - oz
+    ports:
+      - 8080:80
+    restart: on-failure
