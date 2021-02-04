@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Scheduler</name>
+    </assembly>
+    <members>
+        <member name="M:Scheduler.Controllers.SchedulerController.Test">
+            <summary>
+            test comments
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
