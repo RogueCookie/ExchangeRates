@@ -8,6 +8,10 @@ namespace ReportApi.Controllers
     [ApiController]
     public class ReportController : Controller
     {
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         public ActionResult<string> Test()

@@ -4,5 +4,11 @@
         <name>ReportApi</name>
     </assembly>
     <members>
+        <member name="M:ReportApi.Controllers.ReportController.Test">
+            <summary>
+            test
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

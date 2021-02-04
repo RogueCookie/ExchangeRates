@@ -1,18 +1,15 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Net;
+using System.Reflection;
 
 namespace ReportApi
 {
@@ -25,27 +22,28 @@ namespace ReportApi
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                services.AddSwaggerGen(c =>
-                {
-                    c.SwaggerDoc("v1", new OpenApiInfo
-                    {
-                        Title = "Exchange report api",
-                        Description = "API for work with microservices architecture, part of Report api",
-                        Version = "v1",
-                        Contact = new OpenApiContact()
-                        {
-                            Name = "Valeriia Vaganova",
-                            Email = "v9527906422@gmail.com"
-                        }
-                    });
 
-                    // path from which project to read xml documentation
-                    var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                    var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
-                    
-                    c.IncludeXmlComments(xmlCommentsFullPath);
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Exchange report api",
+                    Description = "API for work with microservices architecture, part of Report api",
+                    Version = "v1",
+                    Contact = new OpenApiContact()
+                    {
+                        Name = "Valeriia Vaganova",
+                        Email = "v9527906422@gmail.com",
+                        Url = new Uri("https://www.facebook.com/valeriia.vaganova.9/")
+                    }
                 });
+
+                // path from which project to read xml documentation
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+
+                c.IncludeXmlComments(xmlCommentsFullPath);
             });
+
+            services.AddSwaggerGenNewtonsoftSupport();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
