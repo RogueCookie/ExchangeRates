@@ -12,7 +12,7 @@ services:
     networks:
       - oz
     ports:
-      - "82:80"
+      - 82:80
 
   oz_scheduler:
     image: ${DOCKER_REGISTRY}/oz_scheduler:${TAG}
@@ -22,7 +22,7 @@ services:
     networks:
       - oz
     ports:
-      - "83:80"
+      - 83:80
 
   oz_loader:
     image: ${DOCKER_REGISTRY}/oz_loader:${TAG}

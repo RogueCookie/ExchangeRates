@@ -6,7 +6,7 @@ namespace ReportApi.Controllers
     [Route("api/v1/[controller]/[action]")]
     [Produces("application/json", "application/xml")]
     [ApiController]
-    public class ReportController : Controller
+    public class ReportController : ControllerBase
     {
         /// <summary>
         /// test

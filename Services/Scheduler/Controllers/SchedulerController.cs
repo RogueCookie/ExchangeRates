@@ -6,7 +6,7 @@ namespace Scheduler.Controllers
     [Route("api/v1/[controller]/[action]")]
     [Produces("application/json", "application/xml")]
     [ApiController]
-    public class SchedulerController : Controller
+    public class SchedulerController : ControllerBase
     {
         /// <summary>
         /// test comments
