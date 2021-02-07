@@ -14,13 +14,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F0
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3316A137-0516-4C16-864C-6800D23BF641}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTBConnector", "Services\BTBConnector\BTBConnector.csproj", "{96E405E8-53D6-452F-BC32-4B5087F45687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTBConnector", "Services\BTBConnector\BTBConnector.csproj", "{96E405E8-53D6-452F-BC32-4B5087F45687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "Services\Loader\Loader.csproj", "{DE988113-4D5D-4292-85BA-1060C791AB6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loader", "Services\Loader\Loader.csproj", "{DE988113-4D5D-4292-85BA-1060C791AB6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler", "Services\Scheduler\Scheduler.csproj", "{261E26DE-8403-4452-9AC2-19B14A0AEB2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler", "Services\Scheduler\Scheduler.csproj", "{261E26DE-8403-4452-9AC2-19B14A0AEB2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportApi", "Services\ReportApi\ReportApi.csproj", "{839BDAAB-42C4-4AE9-A19B-19FEA55F8856}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportApi", "Services\ReportApi\ReportApi.csproj", "{839BDAAB-42C4-4AE9-A19B-19FEA55F8856}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{55F6E141-C4B4-44E3-9B72-E069F59EF483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
