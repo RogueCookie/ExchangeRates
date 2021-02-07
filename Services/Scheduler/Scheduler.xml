@@ -10,5 +10,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Scheduler.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Allow to read parameters appsettings.json and the parameters were
+            overwritten with parameters that are passed to the docker compose file
+            </summary>
+        </member>
     </members>
 </doc>
