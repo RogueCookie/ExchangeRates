@@ -1,16 +1,16 @@
-# Tracking the exchange rate of the Czech crown
-# Архитектура решения
-Схема  
+п»ї# Tracking the exchange rate of the Czech crown
+# Solution architecture
+Scheme   
 ![Architecture](./UpdatedArchitecture.png)  
-исходник в drawio [Architecture](./UpdatedArchitecture.drawio) 
-Чешский национальный банк предоставляет возможность отслеживать валютный курс чешской кроны.
-Ежедневный курс доступен по адресу https://www.cnb.cz/en/financial_markets/foreign_excha..
-Исторические данные доступны по адресу https://www.cnb.cz/en/financial_markets/foreign_excha..
-Необходимо разработать систему, состоящую из компонентов:
-1) Отдельное консольное приложение для заполнения БД данными валютных курсов за 2017 и 2018 год (колонка Rate в отчётах CNB).
-2) Задача по расписанию, которая сохраняет текущий курс в БД. Период запуска задаётся в конфигурации.
-3) Реализовать web API, с помощью которого можно получить отчет по курсу кроны в заданный месяц/год. В отчете необходимо вывести минимальное, максимальное значение и медиану для каждой из выбранных валют отдельно, значения должны рассчитываться по неделям месяца (т.е. если в месяце 4 недели - надо вывести для каждой недели необходимые показатели). Валюты, по которым строится отчёт, задаются в конфигурации приложения. Показатели в отчёте рассчитывать для валюты в кол-ве 1 условная единица, т.е. для Amount = 1.
-Например, если в конфигурации указаны валюты EUR и USD, для февраля 2018 отчет в txt формате будет следующим:
+Source in drawio [Architecture](./UpdatedArchitecture.drawio) 
+Czech National Bank provides the ability to track the exchange rate of the Czech crown 
+A daily course is available at https://www.cnb.cz/en/financial_markets/foreign_excha..
+Historical data is available at  https://www.cnb.cz/en/financial_markets/foreign_excha..
+It is necessary to develop a system consisting of components:
+1) A separate console application for filling the database with exchange rate data for 2019 and 2020 (Rate column in CNB reports).
+2) A scheduled task that saves the current course in the database. The start period is set up in the configuration.
+3) Implement a web API, with which you can get a report on the crown exchange rate in a given month / year. In the report, you must display the minimum, maximum value and median for each of the selected currencies separately, the values вЂ‹вЂ‹must be calculated by weeks of the month (i.e. if there are 4 weeks in a month, you must display the necessary indicators for each week). The currencies used to build the report are set in the application configuration. Calculate the indicators in the report for a currency in a quantity of 1 conventional unit, i.e. for Amount = 1.
+For example, if the configuration specifies the currencies EUR and USD, for February 2018 the report in txt format will be as follows: 
 Year: 2018, month: February
 Week periods:
 1...2: USD - max: , min: , median: ; EUR - max: , min: , media: ;
@@ -18,13 +18,13 @@ Week periods:
 12...16: USD - max: , min: , median: ; EUR - max: , min: , media: ;
 19...23: USD - max: , min: , median: ; EUR - max: , min: , media: ;
 26...28: USD - max: , min: , median: ; EUR - max: , min: , media: ;
-Предусмотреть вывод отчёта в двух форматах — txt и JSON (тип передаётся в параметрах запроса, формат вывода для JSON придумать самостоятельно).
-Используемые технологии: .net core, entity framework. По остальным технологиям, которые могут понадобиться для выполнения задания - на ваш выбор.
+Provide the output of the report in two formats - txt and JSON (the type is passed in the request parameters, the output format for JSON must be invented by yourself).
+Technologies used: .net core, entity framework. For the rest of the technologies that may be needed to complete the assignment - your choice. 
 Heroku https://ozexchangerate.herokuapp.com/ 
 
 
-### Основные сервисы:
-#### BTBСonnector
+### Basic services:
+#### BTBРЎonnector
 Service for downloading data from BTB Bank. Implements a console application for downloading / receiving data from remote (BTB Bank).
 [Readme](./Services/BTBConnector/Readme.md)
 #### Loader
