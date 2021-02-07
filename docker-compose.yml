@@ -43,9 +43,12 @@ services:
     restart: on-failure
 
   rabbitmq:
+    container_name: rabbitmq_container
     image: rabbitmq:3.8.11-management
     networks:
      - oz
+    ports:
+      - 85:15672
     restart: on-failure
 
   postgres:
