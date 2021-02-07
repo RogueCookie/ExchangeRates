@@ -21,3 +21,18 @@ Week periods:
 Предусмотреть вывод отчёта в двух форматах — txt и JSON (тип передаётся в параметрах запроса, формат вывода для JSON придумать самостоятельно).
 Используемые технологии: .net core, entity framework. По остальным технологиям, которые могут понадобиться для выполнения задания - на ваш выбор.
 Heroku https://ozexchangerate.herokuapp.com/ 
+
+
+### Основные сервисы:
+#### BTBСonnector
+Service for downloading data from BTB Bank. Implements a console application for downloading / receiving data from remote (BTB Bank).
+[Readme](./Services/BTBConnector/Readme.md)
+#### Loader
+Service collects data from different suppliers and converts them to the required type for storage in a database. Implements a console application with methods for getting, transforming, saving data to a database. 
+[Readme](./Services/Loader/Readme.md)
+#### ReportApi 
+Service for providing data to the user by currency. Implements API and logic for issuing reports in two formats(txt,json) for a specific period.
+[Readme](./Services/ReportApi/Readme.md)
+#### Scheduler 
+Service for creating scheduled tasks. Implements API and logic for adding / editing scheduled tasks 
+[Readme](./Services/Scheduler/Readme.md)
