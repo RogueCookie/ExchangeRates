@@ -1,5 +1,6 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using OzExchangeRates.Core;
 using Serilog;
 using System;
@@ -24,6 +25,7 @@ namespace Loader
                 var connection = _configuration.GetConnectionString("Updater");
                 var workDb = _configuration.GetValue<string>("ConnectionString");
                 var schema = _configuration.GetValue<string>("MySchemaName");
+                //services.AddSingleton<RabbitMQClient>();
             },
                 (services) =>
                 {

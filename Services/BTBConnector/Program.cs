@@ -1,9 +1,15 @@
 ﻿using Autofac.Extensions.DependencyInjection;
+using BTBConnector.Models;
+using BTBConnector.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using OzExchangeRates.Core;
 using Serilog;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using ILogger = Serilog.ILogger;
+using Serilog.Core;
 
 namespace BTBConnector
 {
@@ -19,11 +25,18 @@ namespace BTBConnector
              {
                  _configuration = builderContext.Configuration;
 
-                 var connectionElasticLogger = _configuration.GetConnectionString("ElasticLogger");
+                 var schema = _configuration.GetSection("RabbitSettings").GetValue<string>("HostName");
 
-                 var connection = _configuration.GetConnectionString("Updater");
-                 var workDb = _configuration.GetValue<string>("ConnectionString");
-                 var schema = _configuration.GetValue<string>("MySchemaName");
+                 services.Configure<RabbitSettings>(_configuration.GetSection("RabbitSettings"));
+                 services.AddSingleton<RabbitService>();
+                 
+                 var logger = new LoggerConfiguration()
+                     .Enrich.FromLogContext()
+                     .WriteTo.Console()
+                     .CreateLogger();
+
+                 services.AddLogging(loggingBuilder =>
+                     loggingBuilder.AddSerilog(logger));
              },
                  (services) =>
                  {
@@ -34,22 +47,8 @@ namespace BTBConnector
                  });
             await host.RunAsync((serviceProvider) =>
             {
-                var baseInit = _configuration.GetValue<bool?>("BaseInit");
-                Log.Information($"Base Init - {baseInit}");
-                if (baseInit.HasValue && baseInit.Value)
-                {
-                    try
-                    {
-                        //var dbInit = serviceProvider.GetRequiredService<DbInitializator>();
-                        //dbInit.Initialize().GetAwaiter().GetResult();
-                    }
-                    catch (Exception exception)
-                    {
-                        Log.Error(exception.Message);
-                    }
-                }
-                //var eventBus = serviceProvider.GetRequiredService<RabbitMQClient>();
-                //eventBus.Start();
+               var eventBus = serviceProvider.GetRequiredService<RabbitService>();
+                eventBus.Start();
             });
         }
     }
