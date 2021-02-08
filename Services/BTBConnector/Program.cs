@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using OzExchangeRates.Core;
 using Serilog;
+using System;
+using System.Threading.Tasks;
 
 namespace BTBConnector
 {
@@ -15,28 +15,15 @@ namespace BTBConnector
         {
             using var host = new ServiceHost(args);
 
-            /* host.ConfigureServices((builderContext, services) =>
+             host.ConfigureServices((builderContext, services) =>
              {
                  _configuration = builderContext.Configuration;
 
                  var connectionElasticLogger = _configuration.GetConnectionString("ElasticLogger");
-                 services.AddSerilogToElasticLogging("ribbonUpdater", _configuration, connectionElasticLogger);
 
                  var connection = _configuration.GetConnectionString("Updater");
                  var workDb = _configuration.GetValue<string>("ConnectionString");
                  var schema = _configuration.GetValue<string>("MySchemaName");
-                 services.Configure<RedisConfiguration>(_configuration.GetSection("Redis"));
-
-                 services.AddDbContext<MyContext>(options => options
-                     .UseNpgsql(connection, x => x.MigrationsHistoryTable("_migrations_history", schema))
-                     .UseSnakeCaseNamingConvention());
-
-                 services.AddDbContext<EventStorageContext>(options => options
-                     .UseNpgsql(workDb)
-                     .UseSnakeCaseNamingConvention());
-
-                 services.AddSingleton<IRpcClient, RpcClient>();
-                 services.AddSingleton<DbInitializator>();
              },
                  (services) =>
                  {
@@ -44,7 +31,7 @@ namespace BTBConnector
                      {
                          container.Populate(services);
                      });
-                 });*/
+                 });
             await host.RunAsync((serviceProvider) =>
             {
                 var baseInit = _configuration.GetValue<bool?>("BaseInit");
