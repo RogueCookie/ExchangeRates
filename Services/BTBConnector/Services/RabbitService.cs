@@ -12,7 +12,7 @@ namespace BTBConnector.Services
     {
         private readonly ILogger<RabbitService> _logger;
         private readonly RabbitSettings _settings;
-        private const string routingKey = "commctorToLoader";
+        private const string routingKey = "connectorToLoader";
 
         public RabbitService(IOptions<RabbitSettings> options, ILogger<RabbitService> logger)
         {
@@ -22,7 +22,6 @@ namespace BTBConnector.Services
 
         public void Start()
         {
-            //_logger.LogInformation($"hostyName = {_settings.HostName}, port = {_settings.Port}, login = {_settings.Login}. password = {_settings.Password}");
             DeclareChannel();
         }
 
@@ -54,6 +53,9 @@ namespace BTBConnector.Services
             }
         }
 
+        /// <summary>
+        /// Prepare and send message to the exchange
+        /// </summary>
         private static void Publish(IModel channel)
         {
             if (channel == null) throw new ArgumentNullException(nameof(channel));
