@@ -24,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportApi", "Services\Repor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{55F6E141-C4B4-44E3-9B72-E069F59EF483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzExchangeRates.Core", "Core\OzExchangeRates.Core\OzExchangeRates.Core\OzExchangeRates.Core.csproj", "{535C0B50-48D8-4F03-9159-DE57BCC5D853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OzExchangeRates.Core", "Core\OzExchangeRates.Core\OzExchangeRates.Core\OzExchangeRates.Core.csproj", "{535C0B50-48D8-4F03-9159-DE57BCC5D853}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

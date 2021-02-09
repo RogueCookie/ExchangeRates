@@ -1,9 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Autofac.Extensions.DependencyInjection;
+using Loader.Models;
+using Loader.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OzExchangeRates.Core;
 using Serilog;
+using System.Threading.Tasks;
 
 namespace Loader
 {
@@ -15,28 +17,22 @@ namespace Loader
         {
             using var host = new ServiceHost(args);
 
-           /* host.ConfigureServices((builderContext, services) =>
+            host.ConfigureServices((builderContext, services) =>
             {
                 _configuration = builderContext.Configuration;
 
-                var connectionElasticLogger = _configuration.GetConnectionString("ElasticLogger");
-                services.AddSerilogToElasticLogging("ribbonUpdater", _configuration, connectionElasticLogger);
+                services.Configure<RabbitSettings>(_configuration.GetSection("RabbitSettings"));
+                services.AddSingleton<RabbitService>();
 
-                var connection = _configuration.GetConnectionString("Updater");
-                var workDb = _configuration.GetValue<string>("ConnectionString");
-                var schema = _configuration.GetValue<string>("MySchemaName");
-                services.Configure<RedisConfiguration>(_configuration.GetSection("Redis"));
+            // to create the serilog logger, based on the configuration provided in appsettings.json
+            // provides a fluent interface for building a logging pipeline
+                var logger = new LoggerConfiguration()
+                    .Enrich.FromLogContext()
+                    .WriteTo.Console()
+                    .CreateLogger();
 
-                services.AddDbContext<MyContext>(options => options
-                    .UseNpgsql(connection, x => x.MigrationsHistoryTable("_migrations_history", schema))
-                    .UseSnakeCaseNamingConvention());
-
-                services.AddDbContext<EventStorageContext>(options => options
-                    .UseNpgsql(workDb)
-                    .UseSnakeCaseNamingConvention());
-
-                services.AddSingleton<IRpcClient, RpcClient>();
-                services.AddSingleton<DbInitializator>();
+                services.AddLogging(loggingBuilder =>
+                    loggingBuilder.AddSerilog(logger));
             },
                 (services) =>
                 {
@@ -44,25 +40,12 @@ namespace Loader
                     {
                         container.Populate(services);
                     });
-                });*/
+                });
+
             await host.RunAsync((serviceProvider) =>
             {
-                var baseInit = _configuration.GetValue<bool?>("BaseInit");
-                Log.Information($"Base Init - {baseInit}");
-                if (baseInit.HasValue && baseInit.Value)
-                {
-                    try
-                    {
-                        //var dbInit = serviceProvider.GetRequiredService<DbInitializator>();
-                        //dbInit.Initialize().GetAwaiter().GetResult();
-                    }
-                    catch (Exception exception)
-                    {
-                        Log.Error(exception.Message);
-                    }
-                }
-                //var eventBus = serviceProvider.GetRequiredService<RabbitMQClient>();
-                //eventBus.Start();
+                var eventBus = serviceProvider.GetRequiredService<RabbitService>();
+                eventBus.Start();
             });
         }
     }
