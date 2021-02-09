@@ -1,9 +1,9 @@
-﻿using BTBConnector.Models;
+﻿using Loader.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 
-namespace BTBConnector.Services
+namespace Loader.Services
 {
     public class RabbitService
     {
@@ -12,13 +12,13 @@ namespace BTBConnector.Services
 
         public RabbitService(IOptions<RabbitSettings> options, ILogger<RabbitService> logger)
         {
-            _settings = options.Value ?? throw new ArgumentNullException(nameof(options));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settings = options.Value ?? throw new ArgumentNullException(nameof(options));
         }
 
         public void Start()
         {
-            _logger.LogInformation($"hostyName = {_settings.HostName}, port = {_settings.Port}, login = {_settings.Login}. password = {_settings.Password}");
+            _logger.LogInformation($"hostyName = { _settings.HostName}, port = { _settings.Port}, login = { _settings.Login}. password = { _settings.Password}");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace BTBConnector.Models
+﻿namespace Loader.Models
 {
     /// <summary>
     /// Describe the main settings for rabbit environment

@@ -11,7 +11,10 @@ services:
 
   oz_loader:
     environment:
-      - ConnectionStrings__Updater
+      - RabbitSettings__HostName
+      - RabbitSettings__Port
+      - RabbitSettings__Login
+      - RabbitSettings__Password
 
   oz_btb_connector:
     environment:
