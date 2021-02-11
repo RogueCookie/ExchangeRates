@@ -10,6 +10,41 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Scheduler.Models.JobOption">
+            <summary>
+            Describe fields from the job during reading data from configuration file
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.JobOption.UniqueName">
+            <summary>
+            Unique name of job
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.JobOption.IsEnabled">
+            <summary>
+            Condition Is enabled for reading
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.JobOption.CronSchedule">
+            <summary>
+            Cron schedule expressions (min, hours, day, month, day of week)
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.JobOption.Action">
+            <summary>
+            Name of the action method (class)
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.JobOption.Options">
+            <summary>
+            Additional parameters like EndPointUrl 
+            </summary>
+        </member>
+        <member name="T:Scheduler.Models.JobServiceOptions">
+            <summary>
+            Represent the list of all jobs
+            </summary>
+        </member>
         <member name="M:Scheduler.Program.CreateHostBuilder(System.String[])">
             <summary>
             Allow to read parameters appsettings.json and the parameters were

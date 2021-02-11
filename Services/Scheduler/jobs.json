@@ -1,0 +1,22 @@
+{
+  "JobService": {
+    "IsLogEnabled": false,
+    "Jobs": [
+      {
+        "UniqueName": "Test1",
+        "IsEnabled": true,
+        "CronSchedule": "* * * * *",
+        "Action": "Scheduler.Jobs.MySuperJob",
+        "Options": {
+          "EndpointUrl": "http://google.com"
+        }
+      },
+      {
+        "UniqueName": "UpTimeLogger",
+        "IsEnabled": true,
+        "CronSchedule": "* * * * */10",
+        "Action": "Scheduler.Jobs.pingJob"
+      }
+    ]
+  }
+}

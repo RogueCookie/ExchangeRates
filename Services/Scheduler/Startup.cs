@@ -15,6 +15,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using Hangfire.Dashboard;
+using Scheduler.Models;
 
 namespace Scheduler
 {
@@ -60,15 +61,19 @@ namespace Scheduler
             services.AddSwaggerGenNewtonsoftSupport();
             
             services.AddHangfire(configuration => configuration
+                //.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                //.UseSimpleAssemblyNameTypeSerializer()
+                //.UseDefaultTypeSerializer()
                 .UsePostgreSqlStorage(_configuration.GetConnectionString("SchedulerDbConnection")));
 
+            services.Configure<JobServiceOptions>(_configuration.GetSection("JobService"));
             services.AddHangfireServer();
 
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger, IBackgroundJobClient backgroundJobClient)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger/*, IBackgroundJobClient backgroundJobClient*/)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
@@ -103,7 +108,7 @@ namespace Scheduler
                 Authorization = new List<IDashboardAuthorizationFilter>(){}
             });
 
-            backgroundJobClient.Enqueue(() => Console.WriteLine("Hello, how are you"));
+            //backgroundJobClient.Enqueue(() => Console.WriteLine("Hello, how are you"));
 
             if (env.IsDevelopment())
             {
