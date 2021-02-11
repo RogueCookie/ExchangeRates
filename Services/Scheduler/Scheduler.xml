@@ -16,5 +16,10 @@
             overwritten with parameters that are passed to the docker compose file
             </summary>
         </member>
+        <member name="M:Scheduler.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            DI for startup
+            </summary>
+        </member>
     </members>
 </doc>
