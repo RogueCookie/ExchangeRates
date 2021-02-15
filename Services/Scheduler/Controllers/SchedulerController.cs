@@ -1,28 +1,45 @@
 ﻿using System;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Scheduler.Models;
+using Scheduler.Services;
 
 namespace Scheduler.Controllers
 {
     [Route("api/v1/[controller]/[action]")]
     [Produces("application/json", "application/xml")]
     [ApiController]
-    public class SchedulerController : Controller
+    public class SchedulerController : ControllerBase
     {
         private readonly JobServiceOptions _options;
         private readonly ILogger<SchedulerController> _logger;
+        private readonly RabbitService _rabbitService;
 
-        public SchedulerController(IOptions<JobServiceOptions> options, ILogger<SchedulerController> logger)
+        public SchedulerController(IOptions<JobServiceOptions> options, ILogger<SchedulerController> logger, RabbitService rabbitService)
         {
             _options = options.Value ?? throw new ArgumentNullException(nameof(options));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _rabbitService = rabbitService ?? throw new ArgumentNullException(nameof(rabbitService));
         }
-       
+
+        [HttpPost]
+        public ActionResult ExecuteJobAsync(/*JobOption jobOption*/)
+        {
+            foreach (var job in _options.Jobs)
+            {
+                _logger.LogInformation($"reccuring job was started");
+                RecurringJob.AddOrUpdate(() => RunInBackground(), job.CronSchedule);
+            }
+            //RecurringJob.AddOrUpdate(() => RunInBackground(), Cron.Minutely);
+
+            return Ok();
+        }
+        
         /// <summary>
         /// test comments
         /// </summary>

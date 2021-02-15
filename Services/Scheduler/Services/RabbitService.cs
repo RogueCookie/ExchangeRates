@@ -1,30 +1,24 @@
-﻿using Loader.Models;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using RabbitMQ.Client.Exceptions;
+using Scheduler.Models;
 using System;
 using System.Text;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client.Exceptions;
 
-namespace Loader.Services
+namespace Scheduler.Services
 {
     public class RabbitService
     {
         private readonly ILogger<RabbitService> _logger;
         private readonly RabbitSettings _settings;
-        private const string routingKeyLoader = "connectorToLoader";
-        private const string routingKeyScheduler = "connectorToScheduler";
+        private const string routingKey = "connectorToScheduler";
 
         public RabbitService(IOptions<RabbitSettings> options, ILogger<RabbitService> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = options.Value ?? throw new ArgumentNullException(nameof(options));
-        }
-
-        public void Start()
-        {
-            DeclareChannel();
         }
 
         /// <summary>
@@ -44,14 +38,14 @@ namespace Loader.Services
 
                 using var connection = factory.CreateConnection();
                 using var channel = connection.CreateModel();
-                Consume(channel);
+                //Consume(channel);
             }
             catch (BrokerUnreachableException ex)
             {
-                Console.WriteLine(ex.InnerException);
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.Data.Keys);
-                Console.WriteLine(ex.ToString());
+                _logger.LogError($"{ex.InnerException}");
+                _logger.LogError($"{ex.Message}");
+                _logger.LogError($"{ex.Data.Keys}");
+                _logger.LogError(ex.ToString());
             }
         }
 
@@ -62,10 +56,10 @@ namespace Loader.Services
         {
             if (channel == null) throw new ArgumentNullException(nameof(channel));
 
-            channel.ExchangeDeclare(Exchanges.Loader.ToString(), ExchangeType.Direct, true);
+            channel.ExchangeDeclare(Exchanges.Scheduler.ToString(), ExchangeType.Direct, true);
 
             var queues = channel.QueueDeclare();
-            channel.QueueBind(queues.QueueName, Exchanges.Loader.ToString(), routingKeyLoader);
+            channel.QueueBind(queues.QueueName, Exchanges.Scheduler.ToString(), routingKey);
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (model, args) =>
