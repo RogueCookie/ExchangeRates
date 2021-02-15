@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Text;
+using BTBConnector.Enums;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 
