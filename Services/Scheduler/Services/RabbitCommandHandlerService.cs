@@ -18,10 +18,10 @@ namespace Scheduler.Services
     /// <summary>
     /// Сервис для работы с очередями
     /// </summary>
-    public class RabbitMQService : BackgroundService
+    public class RabbitCommandHandlerService : BackgroundService
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<RabbitMQService> _logger;
+        private readonly ILogger<RabbitCommandHandlerService> _logger;
         private readonly string _hostname;
         private readonly int _port;
         private IConnection _connection;
@@ -29,8 +29,8 @@ namespace Scheduler.Services
         private readonly string _username;
         private readonly string _password;
 
-        public RabbitMQService(IOptions<RabbitSettings> options,
-            IMediator mediator, ILogger<RabbitMQService> logger)
+        public RabbitCommandHandlerService(IOptions<RabbitSettings> options,
+            IMediator mediator, ILogger<RabbitCommandHandlerService> logger)
         {
             _mediator = mediator;
             _logger = logger;

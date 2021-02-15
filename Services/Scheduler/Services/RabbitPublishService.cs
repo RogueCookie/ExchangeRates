@@ -9,13 +9,13 @@ using RabbitMQ.Client.Exceptions;
 
 namespace Scheduler.Services
 {
-    public class RabbitService
+    public class RabbitPublishService
     {
-        private readonly ILogger<RabbitService> _logger;
+        private readonly ILogger<RabbitPublishService> _logger;
         private readonly RabbitSettings _settings;
         private const string routingKey = "connectorToScheduler";
 
-        public RabbitService(IOptions<RabbitSettings> options, ILogger<RabbitService> logger)
+        public RabbitPublishService(IOptions<RabbitSettings> options, ILogger<RabbitPublishService> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _settings = options.Value ?? throw new ArgumentNullException(nameof(options));

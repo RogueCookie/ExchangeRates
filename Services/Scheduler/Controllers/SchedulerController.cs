@@ -18,9 +18,9 @@ namespace Scheduler.Controllers
     {
         private readonly JobServiceOptions _options;
         private readonly ILogger<SchedulerController> _logger;
-        private readonly RabbitService _rabbitService;
+        private readonly RabbitPublishService _rabbitService;
 
-        public SchedulerController(IOptions<JobServiceOptions> options, ILogger<SchedulerController> logger, RabbitService rabbitService)
+        public SchedulerController(IOptions<JobServiceOptions> options, ILogger<SchedulerController> logger, RabbitPublishService rabbitService)
         {
             _options = options.Value ?? throw new ArgumentNullException(nameof(options));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

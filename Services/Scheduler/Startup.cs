@@ -72,7 +72,7 @@ namespace Scheduler
 
             services.AddMvc();
 
-            services.AddSingleton<RabbitService>();
+            services.AddSingleton<RabbitPublishService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
