@@ -18,13 +18,5 @@
         "Action": "Scheduler.Jobs.pingJob"
       }
     ]
-  },
-  {
-    "Version": "1.0",
-    "JobName": "",
-    "IsEnabled": true,
-    "CronSchedule": "* * * * *",
-    "Command": "Download",
-    "RoutingKey": "service_name" 
   }
 }

@@ -6,4 +6,15 @@ Service for creating scheduled tasks. Implements API and logic for adding / edit
 #### Через Rest запрос
 #### Через сообщение в exchange Scheduler
 
+```
+{
+    "Version": "1.0",
+    "JobName": "",
+    "IsEnabled": true,
+    "CronSchedule": "* * * * *",
+    "Command": "Download",
+    "RoutingKey": "service_name" 
+ }
+```
+
 [Go Back](../../Readme.md)

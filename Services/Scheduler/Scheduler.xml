@@ -10,6 +10,54 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Scheduler.Enums.Exchanges">
+            <summary>
+            Enumeration of all exchanges in the system
+            </summary>
+        </member>
+        <member name="M:Scheduler.MediatR.Command.SendCommandHandler.Handle(Scheduler.MediatR.Command.SendCommand,System.Threading.CancellationToken)">
+            <summary>
+            send command by mediator
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Scheduler.Models.CommandModel.Version">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.CommandModel.Command">
+            <summary>
+            TODO
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.CommandModel.JobName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.CommandModel.IsEnabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.CommandModel.RoutingKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.CommandModel.CronScheduler">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Scheduler.Models.Exchanges">
+            <summary>
+            Enumeration of all exchanges in the system
+            </summary>
+        </member>
         <member name="T:Scheduler.Models.JobOption">
             <summary>
             Describe fields from the job during reading data from configuration file
@@ -45,11 +93,48 @@
             Represent the list of all jobs
             </summary>
         </member>
+        <member name="T:Scheduler.Models.RabbitSettings">
+            <summary>
+            Describe the main settings for rabbit environment
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.RabbitSettings.HostName">
+            <summary>
+            Name of the host
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.RabbitSettings.Port">
+            <summary>
+            Port number
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.RabbitSettings.Login">
+            <summary>
+            Login for connection(login) in rabbit on the server
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.RabbitSettings.Password">
+            <summary>
+            Password for login in rabbit on the server
+            </summary>
+        </member>
         <member name="M:Scheduler.Program.CreateHostBuilder(System.String[])">
             <summary>
             Allow to read parameters appsettings.json and the parameters were
             overwritten with parameters that are passed to the docker compose file
             </summary>
+        </member>
+        <member name="T:Scheduler.Services.RabbitCommandHandlerService">
+            <summary>
+            Сервис для работы с очередями
+            </summary>
+        </member>
+        <member name="M:Scheduler.Services.RabbitCommandHandlerService.OnReceived(System.Object,RabbitMQ.Client.Events.BasicDeliverEventArgs)">
+            <summary>
+            Get the message to scheduler command
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="M:Scheduler.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>

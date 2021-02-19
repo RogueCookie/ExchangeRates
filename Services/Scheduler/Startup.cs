@@ -1,6 +1,7 @@
 using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.PostgreSql;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -67,12 +68,13 @@ namespace Scheduler
                 //.UseDefaultTypeSerializer()
                 .UsePostgreSqlStorage(_configuration.GetConnectionString("SchedulerDbConnection")));
 
-            services.Configure<JobServiceOptions>(_configuration.GetSection("JobService"));
+            //services.Configure<JobServiceOptions>(_configuration.GetSection("JobService"));
             services.AddHangfireServer();
 
             services.AddMvc();
-
-            services.AddSingleton<RabbitPublishService>();
+            services.Configure<RabbitSettings>(_configuration.GetSection("RabbitSettings"));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddHostedService<RabbitCommandHandlerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

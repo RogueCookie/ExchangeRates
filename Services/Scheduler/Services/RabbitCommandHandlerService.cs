@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Scheduler.Enums;
+using Scheduler.MediatR.Command;
 using Scheduler.Models;
 using Exchanges = Scheduler.Enums.Exchanges;
 
@@ -48,7 +49,7 @@ namespace Scheduler.Services
         }
 
         /// <summary>
-        /// Get the message from scheduler
+        /// Get the message to scheduler command
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -60,11 +61,20 @@ namespace Scheduler.Services
             {
                 _logger.LogInformation($"Scheduler consume {e.RoutingKey} Received {message}");
                 var commandModel = JsonConvert.DeserializeObject<CommandModel>(message);
+                _mediator.Send(new AddNewJob()
+                {
+                    JobName = commandModel.JobName,
+                    RoutingKey = commandModel.RoutingKey,
+                    Version = commandModel.Version,
+                    Command = commandModel.Command,
+                    CronScheduler = commandModel.CronScheduler,
+                    IsEnabled = commandModel.IsEnabled
+                });
                 _channel?.BasicAck(e.DeliveryTag, false);
             }
             catch (Exception exception)
             {
-                _logger.LogError("gggg", exception);
+                _logger.LogError("Error on received", exception);
             }
         }
 
