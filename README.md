@@ -35,4 +35,4 @@ Service for providing data to the user by currency. Implements API and logic for
 [Readme](./Services/ReportApi/Readme.md)
 #### Scheduler 
 Service for creating scheduled tasks. Implements API and logic for adding / editing scheduled tasks 
-[Readme](./Services/Scheduler/Readme.md)
+[Readme](./Services/Scheduler/SolutionItems/Readme.md)
