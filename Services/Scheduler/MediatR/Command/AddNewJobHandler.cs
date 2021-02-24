@@ -5,6 +5,7 @@ using Scheduler.Models;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Scheduler.MediatR.Models;
 
 namespace Scheduler.MediatR.Command
 {
@@ -27,7 +28,7 @@ namespace Scheduler.MediatR.Command
         public Task<Unit> Handle(AddNewJob request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"reccuring job was started");
-            RecurringJob.AddOrUpdate(() => Send(request), request.CronScheduler);
+            RecurringJob.AddOrUpdate(request.JobName, () => Send(request), request.CronScheduler);
             return Unit.Task;
         }
 

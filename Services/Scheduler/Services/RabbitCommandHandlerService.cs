@@ -1,8 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -12,12 +8,17 @@ using RabbitMQ.Client.Events;
 using Scheduler.Enums;
 using Scheduler.MediatR.Command;
 using Scheduler.Models;
+using System;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Scheduler.MediatR.Models;
 using Exchanges = Scheduler.Enums.Exchanges;
 
 namespace Scheduler.Services
 {
     /// <summary>
-    /// Сервис для работы с очередями
+    /// Service for handle queues
     /// </summary>
     public class RabbitCommandHandlerService : BackgroundService
     {
@@ -79,6 +80,9 @@ namespace Scheduler.Services
         }
 
         // ReSharper disable once InconsistentNaming
+        /// <summary>
+        /// Through one queue, the Scheduler will receive a message that some connectors have appeared and he needs to add a job 
+        /// </summary>
         private void InitializeRabbitMQListener()
         {
             var factory = new ConnectionFactory

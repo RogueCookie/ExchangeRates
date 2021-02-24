@@ -112,7 +112,7 @@ namespace Scheduler
                 IgnoreAntiforgeryToken = true,
                 Authorization = new List<IDashboardAuthorizationFilter>(){}
             });
-
+            //RecurringJob.AddOrUpdate("job name", () => Console.WriteLine("Hello, how are you"), Cron.Daily);
             //backgroundJobClient.Enqueue(() => Console.WriteLine("Hello, how are you"));
 
             if (env.IsDevelopment())

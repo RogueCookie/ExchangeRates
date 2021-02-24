@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MediatR\Models\" />
     <Folder Include="MediatR\Query\" />
   </ItemGroup>
 

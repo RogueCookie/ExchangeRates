@@ -1,13 +1,13 @@
-﻿using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using MediatR;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Scheduler.Models;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Scheduler.Enums;
+using Scheduler.MediatR.Models;
 
 namespace Scheduler.MediatR.Command
 {
@@ -23,8 +23,9 @@ namespace Scheduler.MediatR.Command
         {
             _settingOptions = settingOptions.Value;
         }
+
         /// <summary>
-        /// send command by mediator
+        /// Send command by mediator
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>

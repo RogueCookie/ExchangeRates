@@ -17,45 +17,45 @@
         </member>
         <member name="M:Scheduler.MediatR.Command.SendCommandHandler.Handle(Scheduler.MediatR.Command.SendCommand,System.Threading.CancellationToken)">
             <summary>
-            send command by mediator
+            Send command by mediator
             </summary>
             <param name="request"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="P:Scheduler.Models.CommandModel.Version">
+        <member name="T:Scheduler.MediatR.Models.CommandModel">
             <summary>
-            
+            Data which are used for register a new job in hangfire with particular settings for rabbitMq
             </summary>
         </member>
-        <member name="P:Scheduler.Models.CommandModel.Command">
+        <member name="P:Scheduler.MediatR.Models.CommandModel.Version">
             <summary>
-            TODO
+            Version of created job
             </summary>
         </member>
-        <member name="P:Scheduler.Models.CommandModel.JobName">
+        <member name="P:Scheduler.MediatR.Models.CommandModel.Command">
             <summary>
-            
+            Command for execution
             </summary>
         </member>
-        <member name="P:Scheduler.Models.CommandModel.IsEnabled">
+        <member name="P:Scheduler.MediatR.Models.CommandModel.JobName">
             <summary>
-            
+            Name of the job
             </summary>
         </member>
-        <member name="P:Scheduler.Models.CommandModel.RoutingKey">
+        <member name="P:Scheduler.MediatR.Models.CommandModel.IsEnabled">
             <summary>
-            
+            Whether job marked as enabled (active) or not
             </summary>
         </member>
-        <member name="P:Scheduler.Models.CommandModel.CronScheduler">
+        <member name="P:Scheduler.MediatR.Models.CommandModel.RoutingKey">
             <summary>
-            
+            Routing by which this job  will be communicated with exchange
             </summary>
         </member>
-        <member name="T:Scheduler.Models.Exchanges">
+        <member name="P:Scheduler.MediatR.Models.CommandModel.CronScheduler">
             <summary>
-            Enumeration of all exchanges in the system
+            Cron settings (time period for execution)
             </summary>
         </member>
         <member name="T:Scheduler.Models.JobOption">
@@ -126,7 +126,7 @@
         </member>
         <member name="T:Scheduler.Services.RabbitCommandHandlerService">
             <summary>
-            Сервис для работы с очередями
+            Service for handle queues
             </summary>
         </member>
         <member name="M:Scheduler.Services.RabbitCommandHandlerService.OnReceived(System.Object,RabbitMQ.Client.Events.BasicDeliverEventArgs)">
@@ -135,6 +135,11 @@
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
+        </member>
+        <member name="M:Scheduler.Services.RabbitCommandHandlerService.InitializeRabbitMQListener">
+            <summary>
+            Through one queue, the Scheduler will receive a message that some connectors have appeared and he needs to add a job 
+            </summary>
         </member>
         <member name="M:Scheduler.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
