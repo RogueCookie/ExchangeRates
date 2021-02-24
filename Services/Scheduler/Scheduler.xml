@@ -10,6 +10,54 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Scheduler.Enums.Exchanges">
+            <summary>
+            Enumeration of all exchanges in the system
+            </summary>
+        </member>
+        <member name="M:Scheduler.MediatR.Command.SendCommandHandler.Handle(Scheduler.MediatR.Command.SendCommand,System.Threading.CancellationToken)">
+            <summary>
+            Send command by mediator
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Scheduler.MediatR.Models.CommandModel">
+            <summary>
+            Data which are used for register a new job in hangfire with particular settings for rabbitMq
+            </summary>
+        </member>
+        <member name="P:Scheduler.MediatR.Models.CommandModel.Version">
+            <summary>
+            Version of created job
+            </summary>
+        </member>
+        <member name="P:Scheduler.MediatR.Models.CommandModel.Command">
+            <summary>
+            Command for execution
+            </summary>
+        </member>
+        <member name="P:Scheduler.MediatR.Models.CommandModel.JobName">
+            <summary>
+            Name of the job
+            </summary>
+        </member>
+        <member name="P:Scheduler.MediatR.Models.CommandModel.IsEnabled">
+            <summary>
+            Whether job marked as enabled (active) or not
+            </summary>
+        </member>
+        <member name="P:Scheduler.MediatR.Models.CommandModel.RoutingKey">
+            <summary>
+            Routing by which this job  will be communicated with exchange
+            </summary>
+        </member>
+        <member name="P:Scheduler.MediatR.Models.CommandModel.CronScheduler">
+            <summary>
+            Cron settings (time period for execution)
+            </summary>
+        </member>
         <member name="T:Scheduler.Models.JobOption">
             <summary>
             Describe fields from the job during reading data from configuration file
@@ -45,10 +93,52 @@
             Represent the list of all jobs
             </summary>
         </member>
+        <member name="T:Scheduler.Models.RabbitSettings">
+            <summary>
+            Describe the main settings for rabbit environment
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.RabbitSettings.HostName">
+            <summary>
+            Name of the host
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.RabbitSettings.Port">
+            <summary>
+            Port number
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.RabbitSettings.Login">
+            <summary>
+            Login for connection(login) in rabbit on the server
+            </summary>
+        </member>
+        <member name="P:Scheduler.Models.RabbitSettings.Password">
+            <summary>
+            Password for login in rabbit on the server
+            </summary>
+        </member>
         <member name="M:Scheduler.Program.CreateHostBuilder(System.String[])">
             <summary>
             Allow to read parameters appsettings.json and the parameters were
             overwritten with parameters that are passed to the docker compose file
+            </summary>
+        </member>
+        <member name="T:Scheduler.Services.RabbitCommandHandlerService">
+            <summary>
+            Service for handle queues
+            </summary>
+        </member>
+        <member name="M:Scheduler.Services.RabbitCommandHandlerService.OnReceived(System.Object,RabbitMQ.Client.Events.BasicDeliverEventArgs)">
+            <summary>
+            Get the message to scheduler command
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Scheduler.Services.RabbitCommandHandlerService.InitializeRabbitMQListener">
+            <summary>
+            Through one queue, the Scheduler will receive a message that some connectors have appeared and he needs to add a job 
             </summary>
         </member>
         <member name="M:Scheduler.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">

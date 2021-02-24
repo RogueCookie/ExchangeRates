@@ -1,13 +1,11 @@
 ﻿using Loader.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Concurrent;
-using System.Text;
-using System.Threading.Channels;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
+using System;
+using System.Text;
 
 namespace Loader.Services
 {
@@ -15,7 +13,8 @@ namespace Loader.Services
     {
         private readonly ILogger<RabbitService> _logger;
         private readonly RabbitSettings _settings;
-        private const string routingKey = "connectorToLoader";
+        private const string routingKeyLoader = "connectorToLoader";
+        private const string routingKeyScheduler = "connectorToScheduler";
 
         public RabbitService(IOptions<RabbitSettings> options, ILogger<RabbitService> logger)
         {
@@ -66,7 +65,7 @@ namespace Loader.Services
             channel.ExchangeDeclare(Exchanges.Loader.ToString(), ExchangeType.Direct, true);
 
             var queues = channel.QueueDeclare();
-            channel.QueueBind(queues.QueueName, Exchanges.Loader.ToString(), routingKey);
+            channel.QueueBind(queues.QueueName, Exchanges.Loader.ToString(), routingKeyLoader);
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (model, args) =>

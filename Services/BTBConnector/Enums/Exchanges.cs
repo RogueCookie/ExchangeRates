@@ -1,4 +1,4 @@
-﻿namespace BTBConnector.Models
+﻿namespace BTBConnector.Enums
 {
     /// <summary>
     /// Enumeration of all exchanges in the system
