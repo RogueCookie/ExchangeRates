@@ -1,17 +1,17 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using OzExchangeRates.Core.Enums;
+using OzExchangeRates.Core.Models;
 using RabbitMQ.Client;
-using Scheduler.Models;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Scheduler.Enums;
-using Scheduler.MediatR.Models;
+using RabbitSettings = Scheduler.Models.RabbitSettings;
 
 namespace Scheduler.MediatR.Command
 {
-    public class SendCommand : CommandModel, IRequest
+    public class SendCommand : AddNewJobModel, IRequest
     {
     }
 

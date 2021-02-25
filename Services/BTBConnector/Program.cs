@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OzExchangeRates.Core;
 using Serilog;
 using System.Threading.Tasks;
+using OzExchangeRates.Core.Models;
 
 namespace BTBConnector
 {

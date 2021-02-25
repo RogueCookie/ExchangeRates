@@ -10,11 +10,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Scheduler.Enums.Exchanges">
-            <summary>
-            Enumeration of all exchanges in the system
-            </summary>
-        </member>
         <member name="M:Scheduler.MediatR.Command.SendCommandHandler.Handle(Scheduler.MediatR.Command.SendCommand,System.Threading.CancellationToken)">
             <summary>
             Send command by mediator
@@ -22,41 +17,6 @@
             <param name="request"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
-        </member>
-        <member name="T:Scheduler.MediatR.Models.CommandModel">
-            <summary>
-            Data which are used for register a new job in hangfire with particular settings for rabbitMq
-            </summary>
-        </member>
-        <member name="P:Scheduler.MediatR.Models.CommandModel.Version">
-            <summary>
-            Version of created job
-            </summary>
-        </member>
-        <member name="P:Scheduler.MediatR.Models.CommandModel.Command">
-            <summary>
-            Command for execution
-            </summary>
-        </member>
-        <member name="P:Scheduler.MediatR.Models.CommandModel.JobName">
-            <summary>
-            Name of the job
-            </summary>
-        </member>
-        <member name="P:Scheduler.MediatR.Models.CommandModel.IsEnabled">
-            <summary>
-            Whether job marked as enabled (active) or not
-            </summary>
-        </member>
-        <member name="P:Scheduler.MediatR.Models.CommandModel.RoutingKey">
-            <summary>
-            Routing by which this job  will be communicated with exchange
-            </summary>
-        </member>
-        <member name="P:Scheduler.MediatR.Models.CommandModel.CronScheduler">
-            <summary>
-            Cron settings (time period for execution)
-            </summary>
         </member>
         <member name="T:Scheduler.Models.JobOption">
             <summary>
