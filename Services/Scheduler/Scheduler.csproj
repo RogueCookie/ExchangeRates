@@ -40,4 +40,8 @@
     <Folder Include="MediatR\Query\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\OzExchangeRates.Core\OzExchangeRates.Core\OzExchangeRates.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,11 +1,11 @@
-﻿using BTBConnector.Models;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Text;
-using BTBConnector.Enums;
+using OzExchangeRates.Core.Enums;
+using OzExchangeRates.Core.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
+using System;
+using System.Text;
 
 namespace BTBConnector.Services
 {
@@ -47,10 +47,7 @@ namespace BTBConnector.Services
             }
             catch (BrokerUnreachableException ex)
             {
-                Console.WriteLine(ex.InnerException);
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.Data.Keys);
-                Console.WriteLine(ex.ToString());
+               _logger.LogError(ex, "RabbitService Client DeclareChannel() error");
             }
         }
 

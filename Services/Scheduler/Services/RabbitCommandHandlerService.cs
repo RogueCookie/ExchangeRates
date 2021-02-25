@@ -5,15 +5,13 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Scheduler.Enums;
 using Scheduler.MediatR.Command;
-using Scheduler.Models;
 using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Scheduler.MediatR.Models;
-using Exchanges = Scheduler.Enums.Exchanges;
+using OzExchangeRates.Core.Models;
+using OzExchangeRates.Core.Enums;
 
 namespace Scheduler.Services
 {
@@ -61,7 +59,7 @@ namespace Scheduler.Services
             try
             {
                 _logger.LogInformation($"Scheduler consume {e.RoutingKey} Received {message}");
-                var commandModel = JsonConvert.DeserializeObject<CommandModel>(message);
+                var commandModel = JsonConvert.DeserializeObject<AddNewJobModel>(message);
                 _mediator.Send(new AddNewJob()
                 {
                     JobName = commandModel.JobName,
@@ -100,7 +98,7 @@ namespace Scheduler.Services
             var queueName = "Register.New.Job";
             _channel.QueueDeclare(queueName, exclusive: false, durable: true, autoDelete: false);
             _channel.BasicQos(0, 1, false);
-            _channel.QueueBind(queueName, Exchanges.Scheduler.ToString(), RoutingKey.AddNewJob.ToString());
+            _channel.QueueBind(queueName, Exchanges.Scheduler.ToString(), RoutingKeys.AddNewJob.ToString());
 
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += OnReceived;

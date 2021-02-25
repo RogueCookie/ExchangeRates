@@ -1,11 +1,11 @@
 ﻿using Autofac.Extensions.DependencyInjection;
-using BTBConnector.Models;
 using BTBConnector.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OzExchangeRates.Core;
 using Serilog;
 using System.Threading.Tasks;
+using OzExchangeRates.Core.Models;
 
 namespace BTBConnector
 {

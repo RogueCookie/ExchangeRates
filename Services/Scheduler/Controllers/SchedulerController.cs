@@ -1,13 +1,11 @@
-﻿using System;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using Hangfire;
+﻿using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Scheduler.Models;
-using Scheduler.Services;
+using System;
+using System.Net;
+using System.Threading;
 
 namespace Scheduler.Controllers
 {

@@ -23,7 +23,7 @@ services:
       - oz
     ports:
       - 83:80
-
+   
   oz_loader:
     image: ${DOCKER_REGISTRY}/oz_loader:${TAG}
     build:
@@ -41,6 +41,8 @@ services:
     networks:
       - oz
     restart: on-failure
+    depends_on:
+      - oz_scheduler
 
   rabbitmq:
     container_name: rabbitmq_container

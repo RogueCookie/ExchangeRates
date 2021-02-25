@@ -1,15 +1,14 @@
 ﻿using Hangfire;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Scheduler.Models;
+using OzExchangeRates.Core.Models;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Scheduler.MediatR.Models;
 
 namespace Scheduler.MediatR.Command
 {
-    public class AddNewJob : CommandModel, IRequest
+    public class AddNewJob : AddNewJobModel, IRequest
     {
 
     }
