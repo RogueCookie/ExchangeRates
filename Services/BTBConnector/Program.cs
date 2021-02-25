@@ -1,5 +1,4 @@
 ﻿using Autofac.Extensions.DependencyInjection;
-using BTBConnector.Models;
 using BTBConnector.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

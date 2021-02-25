@@ -1,5 +1,4 @@
 ﻿using Autofac.Extensions.DependencyInjection;
-using Loader.Models;
 using Loader.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

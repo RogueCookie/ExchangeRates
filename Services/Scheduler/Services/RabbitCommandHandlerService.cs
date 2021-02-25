@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using OzExchangeRates.Core.Models;
-using RabbitSettings = Scheduler.Models.RabbitSettings;
 using OzExchangeRates.Core.Enums;
 
 namespace Scheduler.Services

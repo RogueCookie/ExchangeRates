@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Scheduler.Models;
+using OzExchangeRates.Core.Models;
 using Scheduler.Services;
 using System;
 using System.Collections.Generic;

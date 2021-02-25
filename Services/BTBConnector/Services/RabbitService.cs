@@ -47,10 +47,7 @@ namespace BTBConnector.Services
             }
             catch (BrokerUnreachableException ex)
             {
-                Console.WriteLine(ex.InnerException);
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.Data.Keys);
-                Console.WriteLine(ex.ToString());
+               _logger.LogError(ex, "RabbitService Client DeclareChannel() error");
             }
         }
 
