@@ -1,11 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using OzExchangeRates.Core.Enums;
 using OzExchangeRates.Core.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 using System;
 using System.Text;
+using OzExchangeRates.Core.Models;
 
 namespace BTBConnector.Services
 {
@@ -13,11 +15,13 @@ namespace BTBConnector.Services
     {
         private readonly ILogger<RabbitService> _logger;
         private readonly RabbitSettings _settings;
+        private readonly AddNewJobModel _regSettings;
         private const string routingKey = "connectorToLoader";
 
-        public RabbitService(IOptions<RabbitSettings> options, ILogger<RabbitService> logger)
+        public RabbitService(IOptions<RabbitSettings> options, IOptions<AddNewJobModel> registerSettings, ILogger<RabbitService> logger)
         {
             _settings = options.Value ?? throw new ArgumentNullException(nameof(options));
+            _regSettings = registerSettings.Value ?? throw new ArgumentNullException(nameof(options)); 
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -43,12 +47,30 @@ namespace BTBConnector.Services
 
                 using var connection = factory.CreateConnection();
                 using var channel = connection.CreateModel();
+                RegistrationInScheduler(channel);
                 Publish(channel);
             }
             catch (BrokerUnreachableException ex)
             {
-               _logger.LogError(ex, "RabbitService Client DeclareChannel() error");
+               _logger.LogError(ex, "RabbitService Client DeclareChannel() error in BTB connector");
             }
+        }
+
+        /// <summary>
+        /// Self registration for current service in Scheduler if not exist
+        /// </summary>
+        private void RegistrationInScheduler(IModel channel)
+        {
+            var modelForRegistration = _regSettings;
+            var message = JsonConvert.SerializeObject(modelForRegistration);
+            var messageBytes = Encoding.UTF8.GetBytes(message);
+
+
+            channel.ExchangeDeclare(exchange: Exchanges.Scheduler.ToString(), type: ExchangeType.Direct);
+            channel.BasicPublish(
+                exchange: Exchanges.Scheduler.ToString(),
+                routingKey: RoutingKeys.AddNewJob.ToString(),
+                body: messageBytes);
         }
 
         /// <summary>

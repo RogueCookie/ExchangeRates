@@ -15,7 +15,6 @@ namespace Loader.Services
         private readonly ILogger<RabbitService> _logger;
         private readonly RabbitSettings _settings;
         private const string routingKeyLoader = "connectorToLoader";
-        private const string routingKeyScheduler = "connectorToScheduler";
 
         public RabbitService(IOptions<RabbitSettings> options, ILogger<RabbitService> logger)
         {
@@ -49,10 +48,7 @@ namespace Loader.Services
             }
             catch (BrokerUnreachableException ex)
             {
-                Console.WriteLine(ex.InnerException);
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.Data.Keys);
-                Console.WriteLine(ex.ToString());
+                _logger.LogError("DeclareChannel at Loader failed", ex);
             }
         }
 

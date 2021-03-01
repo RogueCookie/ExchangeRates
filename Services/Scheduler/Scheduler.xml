@@ -10,6 +10,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Scheduler.MediatR.Command.AddNewJobHandler.Handle(Scheduler.MediatR.Command.AddNewJob,System.Threading.CancellationToken)">
+            <summary>
+            Add new job if not exist or update previous one
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:Scheduler.MediatR.Command.SendCommandHandler.Handle(Scheduler.MediatR.Command.SendCommand,System.Threading.CancellationToken)">
             <summary>
             Send command by mediator
@@ -51,31 +59,6 @@
         <member name="T:Scheduler.Models.JobServiceOptions">
             <summary>
             Represent the list of all jobs
-            </summary>
-        </member>
-        <member name="T:Scheduler.Models.RabbitSettings">
-            <summary>
-            Describe the main settings for rabbit environment
-            </summary>
-        </member>
-        <member name="P:Scheduler.Models.RabbitSettings.HostName">
-            <summary>
-            Name of the host
-            </summary>
-        </member>
-        <member name="P:Scheduler.Models.RabbitSettings.Port">
-            <summary>
-            Port number
-            </summary>
-        </member>
-        <member name="P:Scheduler.Models.RabbitSettings.Login">
-            <summary>
-            Login for connection(login) in rabbit on the server
-            </summary>
-        </member>
-        <member name="P:Scheduler.Models.RabbitSettings.Password">
-            <summary>
-            Password for login in rabbit on the server
             </summary>
         </member>
         <member name="M:Scheduler.Program.CreateHostBuilder(System.String[])">

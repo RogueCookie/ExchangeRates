@@ -24,6 +24,12 @@ namespace Scheduler.MediatR.Command
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Add new job if not exist or update previous one
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task<Unit> Handle(AddNewJob request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"reccuring job was started");

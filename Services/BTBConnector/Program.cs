@@ -22,6 +22,7 @@ namespace BTBConnector
                  _configuration = builderContext.Configuration;
 
                  services.Configure<RabbitSettings>(_configuration.GetSection("RabbitSettings"));
+                 services.Configure<AddNewJobModel>(_configuration.GetSection("RegisterSettings"));
                  services.AddSingleton<RabbitService>();
                  
                  var logger = new LoggerConfiguration()
