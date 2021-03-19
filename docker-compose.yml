@@ -23,6 +23,8 @@ services:
       - oz
     ports:
       - 83:80
+    depends_on:
+      - rabbitmq
    
   oz_loader:
     image: ${DOCKER_REGISTRY}/oz_loader:${TAG}

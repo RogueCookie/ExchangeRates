@@ -16,7 +16,7 @@ using OzExchangeRates.Core.Enums;
 namespace Scheduler.Services
 {
     /// <summary>
-    /// Service for handle queues
+    /// Service for handle queues принимает команды для добавления новой джобы
     /// </summary>
     public class RabbitCommandHandlerService : BackgroundService
     {

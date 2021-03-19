@@ -69,11 +69,11 @@ namespace Loader.Services
             {
                 var body = args.Body;
                 var message = Encoding.UTF8.GetString(body.ToArray());
-                Console.WriteLine($"We got message at {DateTime.Now}  with txt {message}");
+                //Console.WriteLine($"We got message at {DateTime.Now}  with txt {message}");
             };
             channel.BasicConsume(queues.QueueName, true, consumer);
-            Console.WriteLine("Press me, please");
-            Console.ReadLine();
+            //Console.WriteLine("Press me, please");
+            //Console.ReadLine();
         }
     }
 }
