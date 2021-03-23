@@ -22,8 +22,10 @@ namespace BTBConnector
                  _configuration = builderContext.Configuration;
 
                  services.Configure<RabbitSettings>(_configuration.GetSection("RabbitSettings"));
-                 services.AddSingleton<RabbitService>();
-                 
+                 services.Configure<AddNewJobModel>(_configuration.GetSection("RegisterSettings"));
+                 services.AddSingleton<RegisterJobService>();
+                 services.AddHostedService<RabbitCommandHandlerService>();
+
                  var logger = new LoggerConfiguration()
                      .Enrich.FromLogContext()
                      .WriteTo.Console()
@@ -42,7 +44,7 @@ namespace BTBConnector
 
             await host.RunAsync((serviceProvider) =>
             {
-               var eventBus = serviceProvider.GetRequiredService<RabbitService>();
+               var eventBus = serviceProvider.GetRequiredService<RegisterJobService>();
                 eventBus.Start();
             });
         }
