@@ -69,7 +69,7 @@
         </member>
         <member name="T:Scheduler.Services.RabbitCommandHandlerService">
             <summary>
-            Service for handle queues принимает команды для добавления новой джобы
+            Service for handle queues -get commands for adding a new job
             </summary>
         </member>
         <member name="M:Scheduler.Services.RabbitCommandHandlerService.OnReceived(System.Object,RabbitMQ.Client.Events.BasicDeliverEventArgs)">

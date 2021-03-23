@@ -1,11 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -13,13 +6,16 @@ using OzExchangeRates.Core.Enums;
 using OzExchangeRates.Core.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BTBConnector.Services
 {
     public class RabbitCommandHandlerService : BackgroundService
     { 
         private readonly RabbitSettings _options;
-        private readonly IMediator _mediator;
         private readonly AddNewJobModel _registerSettings;
         private readonly ILogger<RabbitCommandHandlerService> _logger;
         private IConnection _connection;
@@ -71,7 +67,7 @@ namespace BTBConnector.Services
                 var body = args.Body;
                 var message = Encoding.UTF8.GetString(body.ToArray());
                 var commandModel = JsonConvert.DeserializeObject<AddNewJobModel>(message);
-                ExecuteCommand(commandModel.JobName);
+                ExecuteCommand(commandModel.Command);
                 _logger.LogInformation($"Consumer {queueName} with mes {message}");
             };
             _channel.BasicConsume(queueName, consumer: consumer, autoAck: false);

@@ -3,6 +3,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using OzExchangeRates.Core.Enums;
+using OzExchangeRates.Core.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Scheduler.MediatR.Command;
@@ -10,13 +12,11 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using OzExchangeRates.Core.Models;
-using OzExchangeRates.Core.Enums;
 
 namespace Scheduler.Services
 {
     /// <summary>
-    /// Service for handle queues принимает команды для добавления новой джобы
+    /// Service for handle queues -get commands for adding a new job
     /// </summary>
     public class RabbitCommandHandlerService : BackgroundService
     {
