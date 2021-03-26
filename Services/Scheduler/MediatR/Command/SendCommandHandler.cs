@@ -29,7 +29,7 @@ namespace Scheduler.MediatR.Command
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Unit> Handle(SendCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(SendCommand request, CancellationToken cancellationToken) 
         {
             var message = JsonConvert.SerializeObject(request);
             var messageBytes = Encoding.UTF8.GetBytes(message);
