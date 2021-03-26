@@ -3,9 +3,9 @@ using BTBConnector.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OzExchangeRates.Core;
+using OzExchangeRates.Core.Models;
 using Serilog;
 using System.Threading.Tasks;
-using OzExchangeRates.Core.Models;
 
 namespace BTBConnector
 {
@@ -41,7 +41,7 @@ namespace BTBConnector
                          container.Populate(services);
                      });
                  });
-
+            // execute ones when service starts
             await host.RunAsync((serviceProvider) =>
             {
                var eventBus = serviceProvider.GetRequiredService<RegisterJobService>();

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OzExchangeRates.Core.Models
+﻿namespace OzExchangeRates.Core.Models
 {
     /// <summary>
     /// Data which are used for register a new job in hangfire with particular settings for rabbitMq
