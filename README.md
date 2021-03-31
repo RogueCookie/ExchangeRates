@@ -4,8 +4,8 @@ Scheme
 ![Architecture](./UpdatedArchitecture.png)  
 Source in drawio [Architecture](./UpdatedArchitecture.drawio) 
 Czech National Bank provides the ability to track the exchange rate of the Czech crown 
-A daily course is available at https://www.cnb.cz/en/financial_markets/foreign_excha..
-Historical data is available at  https://www.cnb.cz/en/financial_markets/foreign_excha..
+A daily course is available at https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/daily.txt?date=27.07.2018
+Historical data is available at  https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/year.txt?year=2018
 It is necessary to develop a system consisting of components:
 1) A separate console application for filling the database with exchange rate data for 2019 and 2020 (Rate column in CNB reports).
 2) A scheduled task that saves the current course in the database. The start period is set up in the configuration.
