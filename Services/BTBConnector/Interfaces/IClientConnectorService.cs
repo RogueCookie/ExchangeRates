@@ -1,6 +1,8 @@
-﻿using OzExchangeRates.Core.Models;
+﻿using System;
+using OzExchangeRates.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BTBConnector.Models;
 
 namespace BTBConnector.Interfaces
 {
@@ -10,6 +12,6 @@ namespace BTBConnector.Interfaces
         /// Download currency rates from particular source on current date
         /// </summary>
         /// <returns>List of clientModels (data serialized from source)</returns>
-        Task<List<ConnectorClientModel>> DownloadDataDailyAsync();//TODO
+        Task<List<DailyRates>> DownloadDataDailyAsync(DateTime date);
     }
 }

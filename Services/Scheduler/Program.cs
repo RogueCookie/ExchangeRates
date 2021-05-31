@@ -31,7 +31,7 @@ namespace Scheduler
                                 .SetBasePath(env.ContentRootPath)
                                 // add particular json file
                                 .AddJsonFile("appsettings.json", true, true)
-                                .AddJsonFile("jobs.json", true, true) //TODO
+                                //.AddJsonFile("jobs.json", true, true) //TODO
                                 // reads the configuration value from the environment variable 
                                 .AddEnvironmentVariables();
                         });
