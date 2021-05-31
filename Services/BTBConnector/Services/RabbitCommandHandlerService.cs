@@ -10,6 +10,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using BTBConnector.Interfaces;
 
 namespace BTBConnector.Services
 {
@@ -18,16 +19,20 @@ namespace BTBConnector.Services
         private readonly RabbitSettings _options;
         private readonly AddNewJobModel _registerSettings;
         private readonly ILogger<RabbitCommandHandlerService> _logger;
+        private readonly IClientConnectorService _clientConnectorService;
         private IConnection _connection;
         private IModel _channel;
 
-        public RabbitCommandHandlerService(IOptions<RabbitSettings> options,
-                                           IOptions<AddNewJobModel> registerSettings,
-                                           ILogger<RabbitCommandHandlerService> logger)
+        public RabbitCommandHandlerService(
+            IOptions<RabbitSettings> options,
+            IOptions<AddNewJobModel> registerSettings,
+            ILogger<RabbitCommandHandlerService> logger,
+            IClientConnectorService clientConnectorService)
         {
             _options = options.Value ?? throw new ArgumentNullException(nameof(options));
             _registerSettings = registerSettings.Value ?? throw new ArgumentNullException(nameof(registerSettings));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _clientConnectorService = clientConnectorService ?? throw new ArgumentNullException(nameof(clientConnectorService));
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -42,7 +47,7 @@ namespace BTBConnector.Services
         /// <summary>
         /// Through one queue, the Scheduler will send a message (command) which work must be executed 
         /// </summary>
-        private void InitializeRabbitMQListener()
+        private void InitializeRabbitMQListener() //TODO why not async?
         {
             var factory = new ConnectionFactory
             {
@@ -77,9 +82,8 @@ namespace BTBConnector.Services
         private void ExecuteCommand(string command)
         {
             switch (command)
-            {
-                case "Download":
-                    Download();
+            {case "Download": //TODO daily
+                    _clientConnectorService.DownloadDataDailyAsync().GetAwaiter().GetResult(); //TODo what to do here with async?
                     break;
                 case "StoreDate":
                     Store();

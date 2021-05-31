@@ -7,24 +7,30 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 using System;
 using System.Text;
+using BTBConnector.Interfaces;
 
 namespace BTBConnector.Services
 {
     /// <summary>
-    /// regis job in scheduler
+    /// Register job in scheduler
     /// </summary>
     public class RegisterJobService
     {
         private readonly ILogger<RegisterJobService> _logger;
+        private readonly IClientConnectorService _clientConnectorService;
         private readonly RabbitSettings _settings;
         private readonly AddNewJobModel _regSettings;
         private const string routingKey = "connectorToLoader";
 
-        public RegisterJobService(IOptions<RabbitSettings> options, IOptions<AddNewJobModel> registerSettings, ILogger<RegisterJobService> logger)
+        public RegisterJobService(
+            IOptions<RabbitSettings> options, 
+            IOptions<AddNewJobModel> registerSettings, 
+            ILogger<RegisterJobService> logger
+            )
         {
             _settings = options.Value ?? throw new ArgumentNullException(nameof(options));
             _regSettings = registerSettings.Value ?? throw new ArgumentNullException(nameof(options)); 
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));;
         }
 
         public void Start()
