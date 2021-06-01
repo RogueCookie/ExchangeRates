@@ -1,51 +1,59 @@
-﻿using BTBConnector.Interfaces;
-using OzExchangeRates.Core.Models;
+﻿using BTBConnector.Constants;
+using BTBConnector.Interfaces;
+using BTBConnector.Models;
+using CsvHelper;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
-using System.Text.Json.Serialization;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using CsvHelper.Configuration;
 
 namespace BTBConnector.Services
 {
     public class ClientConnectorService : IClientConnectorService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _httpClient;
         private readonly ILogger<ClientConnectorService> _logger;
 
-        public ClientConnectorService(
-            IHttpClientFactory httpClientFactory, 
-            ILogger<ClientConnectorService> logger
-            )
+        public ClientConnectorService(IHttpClientFactory httpClientFactory, ILogger<ClientConnectorService> logger)
         {
-            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+            //из фактори забираем свободного клиента
+            _httpClient = httpClientFactory.CreateClient(HttpClientConstants.Daily);
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <inheritdoc />
-        public async Task<List<ConnectorClientModel>> DownloadDataDailyAsync()
+        public async Task<List<DailyRates>> DownloadDataDailyAsync(DateTime date)
         {
-            var currentDate = DateTime.Today.Date;
             try
             {
-                var client = _httpClientFactory.CreateClient("daily");
-                //client.GetStringAsync($"/daily.txt?date=27.07.2018");
-                var response = await client.GetAsync($"/daily.txt?date=27.07.2018");
-                //var currencyList = JsonSerializer.Deserialize<List<ConnectorClientModel>>(client);
-                if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.BadRequest)
+                var response = await _httpClient.GetStringAsync($"en/financial_markets/foreign_exchange_market/exchange_rate_fixing/daily.txt?date={date:dd.MM.YYYY}");
+
+                TextReader textReader = new StringReader(response);
+
+                var dailyRequestData = await textReader.ReadLineAsync();
+
+                _logger.LogInformation(dailyRequestData);
+
+                var csvReader = new CsvReader(textReader, new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
-                }
+                    HasHeaderRecord = true,
+                    Delimiter = "|"
+                });
+
+                return csvReader.GetRecords<DailyRates>().ToList();
+
             }
-            catch (HttpRequestException ex)
+            catch (Exception exception)
             {
-                _logger.LogError($"Cannot connect to the Btb client and read data from url for daily");
-                throw;
+                _logger.LogError("BTBConnector Request error {Message}", exception.Message);
+                return null;
             }
-            
-            throw new NotImplementedException();
         }
     }
 }

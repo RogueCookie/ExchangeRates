@@ -1,4 +1,5 @@
 ﻿using Autofac.Extensions.DependencyInjection;
+using BTBConnector.Constants;
 using BTBConnector.Interfaces;
 using BTBConnector.Services;
 using Microsoft.Extensions.Configuration;
@@ -31,23 +32,20 @@ namespace BTBConnector
                  services.AddHostedService<RabbitCommandHandlerService>();
                  services.AddTransient<IClientConnectorService, ClientConnectorService>();
                  
-                 services.AddHttpClient("daily", client =>
+                 services.AddHttpClient(HttpClientConstants.Daily, client =>
                  {
-                     //client.BaseAddress = new Uri("https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/daily.txt?date=27.07.2018"); //TODO
-                     client.BaseAddress = new Uri("https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing"); //TODO
-
-                     //client.DefaultRequestHeaders.Add("DailyHeader", Guid.NewGuid().ToString());
+                     client.BaseAddress = new Uri("https://www.cnb.cz");
                  });
-                     //.AddPolicyHandler(GetRetryPolicy());
+                 //.AddPolicyHandler(GetRetryPolicy());
 
-                     //services.AddHttpClient("yearly", client =>
-                     //{
-                     //    client.BaseAddress =
-                     //        new Uri(
-                     //            "https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/year.txt?year=2018"); //TODO
-                     //    client.DefaultRequestHeaders.Add("YearlyHeader", Guid.NewGuid().ToString());
-                     //});
-                     //.AddPolicyHandler(GetRetryPolicy());
+                 //services.AddHttpClient("yearly", client =>
+                 //{
+                 //    client.BaseAddress =
+                 //        new Uri(
+                 //            "https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/year.txt?year=2018"); //TODO
+                 //    client.DefaultRequestHeaders.Add("YearlyHeader", Guid.NewGuid().ToString());
+                 //});
+                 //.AddPolicyHandler(GetRetryPolicy());
 
                  var logger = new LoggerConfiguration()
                      .Enrich.FromLogContext()
@@ -72,7 +70,7 @@ namespace BTBConnector
             });
         }
 
-        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()//TODO
         {
             throw new NotImplementedException();
         }

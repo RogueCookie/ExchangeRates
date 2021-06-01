@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using BTBConnector.Interfaces;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -10,7 +11,6 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using BTBConnector.Interfaces;
 
 namespace BTBConnector.Services
 {
@@ -47,14 +47,15 @@ namespace BTBConnector.Services
         /// <summary>
         /// Through one queue, the Scheduler will send a message (command) which work must be executed 
         /// </summary>
-        private void InitializeRabbitMQListener() //TODO why not async?
+        private void InitializeRabbitMQListener() 
         {
             var factory = new ConnectionFactory
             {
                 HostName = _options.HostName,
                 UserName = _options.Login,
                 Password = _options.Password,
-                Port = _options.Port
+                Port = _options.Port,
+                DispatchConsumersAsync = true
             };
 
             _connection = factory.CreateConnection(clientProvidedName: "BTBConnector listener");
@@ -67,23 +68,23 @@ namespace BTBConnector.Services
             _channel.QueueBind(queueName, Exchanges.Scheduler.ToString(), _registerSettings.RoutingKey);
 
             var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += (model, args) =>
+            consumer.Received += async (model, args) =>
             {
                 var body = args.Body;
                 var message = Encoding.UTF8.GetString(body.ToArray());
                 var commandModel = JsonConvert.DeserializeObject<AddNewJobModel>(message);
-                ExecuteCommand(commandModel.Command);
+                await ExecuteCommand(commandModel.Command);
                 _logger.LogInformation($"Consumer {queueName} with mes {message}");
             };
             _channel.BasicConsume(queueName, consumer: consumer, autoAck: false);
             _logger.LogInformation("BTB connector get command from scheduler");
         }
 
-        private void ExecuteCommand(string command)
+        private async Task ExecuteCommand(string command)
         {
             switch (command)
-            {case "Download": //TODO daily
-                    _clientConnectorService.DownloadDataDailyAsync().GetAwaiter().GetResult(); //TODo what to do here with async?
+            {case "Download": 
+                    await _clientConnectorService.DownloadDataDailyAsync(DateTime.Now); 
                     break;
                 case "StoreDate":
                     Store();
