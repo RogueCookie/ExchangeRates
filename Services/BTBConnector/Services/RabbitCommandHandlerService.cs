@@ -67,7 +67,7 @@ namespace BTBConnector.Services
             _channel.BasicQos(0, 1, false);
             _channel.QueueBind(queueName, Exchanges.Scheduler.ToString(), _registerSettings.RoutingKey);
 
-            var consumer = new EventingBasicConsumer(_channel);
+            var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.Received += async (model, args) =>
             {
                 var body = args.Body;
